@@ -1,16 +1,23 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageSwitcher } from "./language-switcher"
 import { useLanguage } from "@/lib/language-context"
+import { useTheme } from "next-themes"
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
   const { t } = useLanguage()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const navItems = [
     { label: t.nav.home, href: "#hero" },
@@ -26,9 +33,9 @@ export function Navigation() {
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.45 }}
-      className="sticky top-0 left-0 right-0 z-40 bg-[rgba(25,23,22,0.97)] border-b border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur"
+      className="sticky top-0 left-0 right-0 z-50 bg-[rgba(25,23,22,0.97)] dark:bg-[rgba(25,23,22,0.98)] border-b border-white/10 dark:border-white/20 shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur"
     >
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -36,24 +43,24 @@ export function Navigation() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-3"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <Image
                 src="/toplogo.png"
-                alt="Ege Pet logosu"
+                alt="EGE PET Hayvan Mezarlığı logosu - Evcil hayvan mezarlığı ve kremasyon hizmetleri"
                 width={150}
                 height={60}
                 priority
-                className="h-10 w-auto sm:h-12 object-contain"
+                className="h-8 w-auto sm:h-10 md:h-12 object-contain"
               />
-              <div className="text-left leading-tight">
-                <span className="text-sm uppercase tracking-[0.3em] text-white/70">Ege Pet</span>
-                <p className="font-serif text-2xl font-semibold text-white">Hayvan Mezarlığı</p>
+              <div className="text-left leading-tight hidden sm:block">
+                <span className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/70">Ege Pet</span>
+                <p className="font-serif text-lg sm:text-xl md:text-2xl font-semibold text-white">Hayvan Mezarlığı</p>
               </div>
             </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.map((item, index) => (
               <motion.a
                 key={item.href}
@@ -66,11 +73,33 @@ export function Navigation() {
                 {item.label}
               </motion.a>
             ))}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-white hover:bg-white/10"
+                aria-label="Tema değiştir"
+              >
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </Button>
+            )}
             <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="lg:hidden flex items-center gap-1 sm:gap-2">
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-white hover:bg-white/10"
+                aria-label="Tema değiştir"
+              >
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </Button>
+            )}
             <LanguageSwitcher />
             <Button
               variant="ghost"
@@ -91,7 +120,7 @@ export function Navigation() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden mt-3 pb-4 rounded-2xl bg-white/5 p-4 backdrop-blur-xl border border-white/10"
+              className="lg:hidden mt-3 pb-4 rounded-2xl bg-white/5 p-4 backdrop-blur-xl border border-white/10"
             >
               {navItems.map((item) => (
                 <a

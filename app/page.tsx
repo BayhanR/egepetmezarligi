@@ -9,21 +9,27 @@ import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { SchemaMarkup } from "@/components/schema-markup"
+import { LocationLinksSection } from "@/components/location-links-section"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[var(--brand-warm)]">
-      <Navigation />
-      <HeroSection />
-      <AboutSection />
-      <ServicesSection />
-      <MemorialGallery />
-      <PricingSection />
-      <TestimonialsSection />
-      <ContactSection />
-      <Footer />
-      <WhatsAppButton />
-      <ScrollToTop />
-    </main>
+    <>
+      <SchemaMarkup />
+      <main className="min-h-screen bg-[var(--brand-warm)] dark:bg-transparent">
+        <Navigation />
+        <HeroSection />
+        <AboutSection />
+        <ServicesSection />
+        <LocationLinksSection />
+        <MemorialGallery />
+        <PricingSection />
+        <TestimonialsSection />
+        <ContactSection />
+        <Footer />
+        <WhatsAppButton />
+        <ScrollToTop />
+      </main>
+    </>
   )
 }

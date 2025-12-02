@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
         variant="ghost"
         size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 hover:bg-[rgba(249,55,69,0.12)] text-white"
+        className="flex items-center gap-2 hover:bg-[rgba(249,54,68,0.12)] text-white"
       >
         <Globe className="h-4 w-4" />
         <span className="hidden sm:inline">{currentLanguage?.flag}</span>
@@ -49,9 +49,9 @@ export function LanguageSwitcher() {
                     setLanguage(lang.code)
                     setIsOpen(false)
                   }}
-                  className={`w-full px-4 py-3 text-left transition-colors flex items-center gap-3 hover:bg-[rgba(249,55,69,0.08)] ${
+                  className={`w-full px-4 py-3 text-left transition-colors flex items-center gap-3 hover:bg-[rgba(249,54,68,0.08)] ${
                     language === lang.code
-                      ? "bg-[rgba(249,55,69,0.12)] text-[--brand-primary] font-medium"
+                      ? "bg-[rgba(249,54,68,0.12)] text-[--brand-primary] font-medium"
                       : "text-foreground/80"
                   }`}
                 >

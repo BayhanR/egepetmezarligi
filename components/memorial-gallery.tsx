@@ -22,19 +22,19 @@ export function MemorialGallery() {
   const { t } = useLanguage()
 
   return (
-    <section id="gallery" ref={ref} className="py-24">
+    <section id="gallery" ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background dark:bg-transparent">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">{t.gallery.title}</h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">{t.gallery.subtitle}</p>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">{t.gallery.title}</h2>
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-4">{t.gallery.subtitle}</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-4">
           {memorials.map((memorial, index) => (
             <motion.div
               key={memorial.name}
@@ -47,10 +47,11 @@ export function MemorialGallery() {
             >
               <motion.img
                 src={memorial.image}
-                alt={memorial.name}
-                className="w-full h-64 object-cover"
+                alt={`${memorial.name} - EGE PET Hayvan Mezarlığı anı galerisi, pet mezarlığı anı taşı`}
+                className="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover"
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.4 }}
+                loading="lazy"
               />
 
               <motion.div

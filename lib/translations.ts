@@ -65,7 +65,7 @@ export const translations = {
         name: "Temel Paket",
         price: "2.500₺",
         description: "Basit ve saygılı bir veda",
-        features: ["Evden alım hizmeti", "Kremasyon işlemi", "Standart anı kutusu", "Anı sertifikası"],
+        features: ["Evden alım hizmeti", "Defin ve gömü işlemi", "Standart anı taşı", "Anı sertifikası"],
       },
       special: {
         name: "Özel Paket",
@@ -73,8 +73,8 @@ export const translations = {
         description: "Daha özel bir anma deneyimi",
         features: [
           "Evden alım hizmeti",
-          "Kremasyon işlemi",
-          "Premium anı kutusu",
+          "Defin ve gömü işlemi",
+          "Premium anı taşı",
           "Anı sertifikası",
           "Anı bahçesinde özel alan",
           "Fotoğraflı anı plaketi",
@@ -86,8 +86,8 @@ export const translations = {
         description: "En kapsamlı hizmet",
         features: [
           "Evden alım hizmeti",
-          "Kremasyon işlemi",
-          "Lüks anı kutusu",
+          "Defin ve gömü işlemi",
+          "Lüks anı taşı",
           "Anı sertifikası",
           "Anı bahçesinde özel alan",
           "Fotoğraflı anı plaketi",

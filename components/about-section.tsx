@@ -18,9 +18,9 @@ export function AboutSection() {
   }, [])
 
   return (
-    <section id="about" ref={ref} className="py-24 bg-[var(--brand-white)] relative overflow-hidden">
+    <section id="about" ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background dark:bg-transparent relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -29,8 +29,9 @@ export function AboutSection() {
             <div className="relative rounded-[1.5rem] overflow-hidden shadow-[var(--shadow-md)] border border-[--brand-gray]">
               <img
                 src="/peaceful-pet-memorial-garden-with-flowers-and-tree.jpg"
-                alt="Huzur Bahçesi"
+                alt="EGE PET Hayvan Mezarlığı - Doğayla iç içe huzurlu anı bahçesi, çiçekler ve ağaçlarla çevrili pet mezarlığı alanı"
                 className="w-full h-auto"
+                loading="lazy"
               />
             </div>
           </motion.div>
@@ -40,8 +41,8 @@ export function AboutSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[var(--brand-dark)] mb-6">{t.about.title}</h2>
-            <div className="space-y-4 text-lg text-[rgba(25,23,22,0.75)] leading-relaxed">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">{t.about.title}</h2>
+            <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-foreground/75 leading-relaxed">
               <p>{t.about.paragraph1}</p>
               <p>{t.about.paragraph2}</p>
               <p>{t.about.paragraph3}</p>

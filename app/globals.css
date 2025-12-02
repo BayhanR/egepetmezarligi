@@ -5,8 +5,8 @@
 
 :root {
   /* Brand palette */
-  --brand-primary: #f93745;
-  --brand-primary-hover: #d62f3a;
+  --brand-primary: #f93644;
+  --brand-primary-hover: #d62e3a;
   --brand-dark: #191716;
   --brand-white: #ffffff;
   --brand-gray: #e7e7e7;
@@ -32,7 +32,7 @@
   --border: var(--brand-gray);
   --input: var(--brand-gray);
   --ring: var(--brand-primary);
-  --chart-1: #f93745;
+  --chart-1: #f93644;
   --chart-2: #f1bfc4;
   --chart-3: #8a8a8a;
   --chart-4: #434343;
@@ -71,7 +71,7 @@
   --border: #2d2928;
   --input: #2d2928;
   --ring: var(--brand-primary);
-  --chart-1: #f93745;
+  --chart-1: #f93644;
   --chart-2: #fab3ba;
   --chart-3: #fce0e3;
   --chart-4: #c1b6b1;
@@ -131,13 +131,25 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "liga" on, "kern" on;
-    background-image: radial-gradient(circle at top, rgba(249, 55, 69, 0.04), transparent 45%),
+    background-image: radial-gradient(circle at top, rgba(249, 54, 68, 0.04), transparent 45%),
       linear-gradient(180deg, rgba(25, 23, 22, 0.04), transparent 35%);
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+  }
+  .dark body {
+    background-image: 
+      linear-gradient(135deg, rgba(55, 40, 35, 0.98) 0%, rgba(40, 32, 28, 0.99) 30%, rgba(30, 25, 22, 1) 60%, rgba(25, 23, 22, 1) 100%),
+      radial-gradient(circle at 20% 30%, rgba(249, 54, 68, 0.12), transparent 50%);
+    background-attachment: fixed;
+    background-size: 100% 100%;
   }
 }
 
@@ -178,7 +190,7 @@
   }
 
   .hero-overlay {
-    background: radial-gradient(circle at 20% 20%, rgba(249, 55, 69, 0.25), transparent 55%),
+    background: radial-gradient(circle at 20% 20%, rgba(249, 54, 68, 0.25), transparent 55%),
       linear-gradient(135deg, rgba(25, 23, 22, 0.92), rgba(25, 23, 22, 0.8));
   }
 
