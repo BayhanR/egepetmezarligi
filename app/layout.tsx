@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Lora, Nunito_Sans } from "next/font/google"
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { LanguageProvider } from "@/lib/language-context"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -85,6 +86,17 @@ export const metadata: Metadata = {
     // Google Search Console verification code buraya eklenecek
     // google: "verification-code",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
 }
 
 export default function RootLayout({
@@ -95,6 +107,19 @@ export default function RootLayout({
   return (
     <html lang="tr" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${lora.variable} ${nunitoSans.variable} font-sans antialiased`}>
+        {/* Google tag (gtag.js) - strategy="beforeInteractive" ile head'e eklenir */}
+        <Script id="google-ads" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'AW-17822278183');
+          `}
+        </Script>
+
+        
+        
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>

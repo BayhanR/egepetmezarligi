@@ -24,7 +24,7 @@ export default function Home() {
         <LocationLinksSection />
         <MemorialGallery />
         <PricingSection />
-        <TestimonialsSection />
+        
         <ContactSection />
         <Footer />
         <WhatsAppButton />

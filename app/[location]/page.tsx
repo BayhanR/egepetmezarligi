@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
+import { headers } from "next/headers"
 import { getLocationBySlug, getAllLocationSlugs, type Location } from "@/lib/locations"
 import { MapPin, Clock, Phone, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const slugs = getAllLocationSlugs()
+  console.log(`[Static Generation] Generating ${slugs.length} location pages`)
   return slugs.map((slug) => ({
     location: slug,
   }))
@@ -178,6 +180,29 @@ export default async function LocationPage({ params }: PageProps) {
 
   if (!location) {
     notFound()
+  }
+
+  // Google bot ve diğer crawler'lar için içeriği göster, normal kullanıcıları ana sayfaya yönlendir
+  const headersList = await headers()
+  const userAgent = headersList.get('user-agent')?.toLowerCase() || ''
+  
+  const isBot = 
+    userAgent.includes('googlebot') ||
+    userAgent.includes('bingbot') ||
+    userAgent.includes('slurp') ||
+    userAgent.includes('duckduckbot') ||
+    userAgent.includes('baiduspider') ||
+    userAgent.includes('yandexbot') ||
+    userAgent.includes('sogou') ||
+    userAgent.includes('exabot') ||
+    userAgent.includes('facebot') ||
+    userAgent.includes('ia_archiver') ||
+    userAgent.includes('crawler') ||
+    userAgent.includes('spider')
+
+  // Bot değilse ana sayfaya yönlendir
+  if (!isBot) {
+    redirect('/')
   }
 
   const isMuğla = location.parent === "Muğla"

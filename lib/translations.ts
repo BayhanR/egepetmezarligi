@@ -87,11 +87,9 @@ export const translations = {
         features: [
           "Evden alım hizmeti",
           "Defin ve gömü işlemi",
-          "Lüks anı taşı",
           "Anı sertifikası",
           "Anı bahçesinde özel alan",
           "Fotoğraflı anı plaketi",
-          "Özel anma töreni",
           "Profesyonel fotoğraf çekimi",
         ],
       },
