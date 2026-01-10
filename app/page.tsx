@@ -11,8 +11,11 @@ import { WhatsAppButton } from "@/components/whatsapp-button"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { SchemaMarkup } from "@/components/schema-markup"
 import { LocationLinksSection } from "@/components/location-links-section"
+import { getMemorials } from "@/lib/api"
 
-export default function Home() {
+export default async function Home() {
+  const memorials = await getMemorials()
+
   return (
     <>
       <SchemaMarkup />
@@ -22,9 +25,9 @@ export default function Home() {
         <AboutSection />
         <ServicesSection />
         <LocationLinksSection />
-        <MemorialGallery />
+        <MemorialGallery memorials={memorials} />
         <PricingSection />
-        
+
         <ContactSection />
         <Footer />
         <WhatsAppButton />
