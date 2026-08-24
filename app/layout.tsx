@@ -21,25 +21,26 @@ const nunitoSans = Nunito_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "EGE PET Hayvan Mezarlığı | Evcil Dostlarınız İçin Huzurlu Bir Veda",
-    template: "%s | EGE PET Hayvan Mezarlığı",
+    default: "Ege Pet Hayvan Mezarlığı | İzmir 7/24 Cenaze Nakil ve Defin Hizmeti",
+    template: "%s | Ege Pet Hayvan Mezarlığı",
   },
-  description: "Evcil dostlarınız için doğayla iç içe, saygılı bir anı alanı. Pet mezarlığı, kremasyon ve anı bahçesi hizmetleri. İzmir'de profesyonel hayvan mezarlığı hizmeti.",
+  description:
+    "Ege Pet Hayvan Mezarlığı; İzmir Kemalpaşa'daki 2 dönümlük Huzur Bahçesi'nde 7/24 evden alım, özel cenaze nakil ve saygılı ebedi defin hizmeti sunmaktadır.",
   keywords: [
-    "hayvan mezarlığı",
+    "Ege Pet Hayvan Mezarlığı",
+    "İzmir hayvan mezarlığı",
     "pet mezarlığı",
     "evcil hayvan mezarlığı",
-    "kremasyon",
-    "anı bahçesi",
-    "pet kremasyon",
-    "hayvan defin",
+    "hayvan defin hizmeti",
     "evcil hayvan defin",
-    "İzmir hayvan mezarlığı",
+    "pet cenaze nakil",
+    "Kemalpaşa hayvan mezarlığı",
     "pet anı bahçesi",
+    "kedi köpek mezarlığı",
   ],
-  authors: [{ name: "EGE PET Hayvan Mezarlığı" }],
-  creator: "EGE PET Hayvan Mezarlığı",
-  publisher: "EGE PET Hayvan Mezarlığı",
+  authors: [{ name: "Ege Pet Hayvan Mezarlığı" }],
+  creator: "Ege Pet Hayvan Mezarlığı",
+  publisher: "Ege Pet Hayvan Mezarlığı",
   formatDetection: {
     email: false,
     address: false,
@@ -53,22 +54,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     url: "https://egepetmezarligi.com",
-    siteName: "EGE PET Hayvan Mezarlığı",
-    title: "EGE PET Hayvan Mezarlığı | Evcil Dostlarınız İçin Huzurlu Bir Veda",
-    description: "Evcil dostlarınız için doğayla iç içe, saygılı bir anı alanı. Pet mezarlığı, kremasyon ve anı bahçesi hizmetleri.",
+    siteName: "Ege Pet Hayvan Mezarlığı",
+    title: "Ege Pet Hayvan Mezarlığı | İzmir 7/24 Cenaze Nakil ve Defin Hizmeti",
+    description:
+      "İzmir Kemalpaşa'da can dostunuz için 2 dönümlük korunaklı anı bahçesi, 7/24 evden alım, cenaze nakli ve saygılı defin hizmetleri.",
     images: [
       {
         url: "/bgimage.png",
         width: 1200,
         height: 630,
-        alt: "EGE PET Hayvan Mezarlığı - Huzurlu Anı Bahçesi",
+        alt: "Ege Pet Hayvan Mezarlığı - Kemalpaşa Huzur Bahçesi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "EGE PET Hayvan Mezarlığı | Evcil Dostlarınız İçin Huzurlu Bir Veda",
-    description: "Evcil dostlarınız için doğayla iç içe, saygılı bir anı alanı. Pet mezarlığı, kremasyon ve anı bahçesi hizmetleri.",
+    title: "Ege Pet Hayvan Mezarlığı | İzmir 7/24 Cenaze Nakil ve Defin Hizmeti",
+    description:
+      "Can dostunuz için saygılı bir veda. İzmir ve çevre illerden 7/24 evden alım ve Kemalpaşa Huzur Bahçesi'nde ebedi defin desteği.",
     images: ["/bgimage.png"],
   },
   robots: {
@@ -82,21 +85,16 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    // Google Search Console verification code buraya eklenecek
-    // google: "verification-code",
-  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-dark-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-light-32x32.png", type: "image/png", sizes: "32x32" },
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
-  manifest: "/manifest.json",
 }
 
 export default function RootLayout({
@@ -107,7 +105,7 @@ export default function RootLayout({
   return (
     <html lang="tr" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${lora.variable} ${nunitoSans.variable} font-sans antialiased`}>
-        {/* Google tag (gtag.js) - strategy="beforeInteractive" ile head'e eklenir */}
+        {/* Google tag (gtag.js) */}
         <Script id="google-ads" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -118,8 +116,6 @@ export default function RootLayout({
           `}
         </Script>
 
-        
-        
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>

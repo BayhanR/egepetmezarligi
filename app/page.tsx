@@ -3,7 +3,6 @@ import { AboutSection } from "@/components/about-section"
 import { ServicesSection } from "@/components/services-section"
 import { MemorialGallery } from "@/components/memorial-gallery"
 import { PricingSection } from "@/components/pricing-section"
-import { TestimonialsSection } from "@/components/testimonials-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
@@ -27,7 +26,6 @@ export default async function Home() {
         <LocationLinksSection />
         <MemorialGallery memorials={memorials} />
         <PricingSection />
-
         <ContactSection />
         <Footer />
         <WhatsAppButton />

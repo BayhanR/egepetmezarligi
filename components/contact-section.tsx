@@ -1,21 +1,23 @@
 "use client"
 
 import type React from "react"
-
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
+import { GoogleMapsLocator } from "@/components/google-maps-locator"
 
 export function ContactSection() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
+  const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,129 +27,155 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
+    setSubmitted(true)
+    setTimeout(() => setSubmitted(false), 5000)
   }
 
   return (
     <section id="contact" ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-muted/30 dark:bg-transparent">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-10"
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : shouldReduceMotion ? { opacity: 1 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.7 }}
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">{t.contact.title}</h2>
-          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-4">{t.contact.subtitle}</p>
+          <span className="inline-block px-3.5 py-1 rounded-full bg-[rgba(249,54,68,0.1)] text-[--brand-primary] text-xs sm:text-sm font-semibold tracking-wider uppercase mb-3">
+            7/24 Kesintisiz Destek
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">
+            {t.contact.title}
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-4">
+            {t.contact.subtitle}
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 max-w-6xl mx-auto px-2 sm:px-4">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 35, clipPath: "inset(12% 0% 0% 0% round 1.5rem)" }}
+            animate={isInView ? { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 1.5rem)" } : shouldReduceMotion ? { opacity: 1 } : {}}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Card className="border-none shadow-xl rounded-3xl bg-card h-full">
-              <CardContent className="p-4 sm:p-6 md:p-8">
-                <h3 className="font-serif text-xl sm:text-2xl font-bold mb-4 sm:mb-6">{t.contact.formTitle}</h3>
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                  <div>
-                    <Input
-                      placeholder={t.contact.namePlaceholder}
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="rounded-xl border-2"
-                      required
-                    />
+            <Card className="border shadow-xl rounded-3xl bg-card h-full overflow-hidden">
+              <CardContent className="p-5 sm:p-7 md:p-8">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-foreground">
+                  {t.contact.formTitle}
+                </h3>
+                {submitted ? (
+                  <div className="py-12 text-center space-y-3">
+                    <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto" />
+                    <p className="font-serif text-xl font-bold text-foreground">Mesajınız Alındı</p>
+                    <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+                      Talebiniz ekibimize iletildi. En kısa sürede sizinle iletişime geçeceğiz.
+                    </p>
                   </div>
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder={t.contact.emailPlaceholder}
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="rounded-xl border-2"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      type="tel"
-                      placeholder={t.contact.phonePlaceholder}
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="rounded-xl border-2"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      placeholder={t.contact.messagePlaceholder}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="rounded-xl border-2 min-h-24 sm:min-h-32"
-                      required
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full rounded-xl py-4 sm:py-5 md:py-6 text-base sm:text-lg font-semibold tracking-wide text-[--brand-dark] bg-[--brand-primary] hover:bg-[--brand-primary-hover]"
-                  >
-                    <span className="text-[--brand-dark]">{t.contact.submitBtn}</span>
-                  </Button>
-                </form>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                    <div>
+                      <Input
+                        placeholder={t.contact.namePlaceholder}
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="rounded-xl border"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        type="email"
+                        placeholder={t.contact.emailPlaceholder}
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="rounded-xl border"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        type="tel"
+                        placeholder={t.contact.phonePlaceholder}
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="rounded-xl border"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Textarea
+                        placeholder={t.contact.messagePlaceholder}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="rounded-xl border min-h-24 sm:min-h-32"
+                        required
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="w-full rounded-xl py-5 sm:py-6 text-base font-semibold text-white bg-[--brand-primary] hover:bg-[--brand-primary-hover]"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      <span>{t.contact.submitBtn}</span>
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6 sm:space-y-8"
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 35, clipPath: "inset(12% 0% 0% 0% round 1.5rem)" }}
+            animate={isInView ? { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 1.5rem)" } : shouldReduceMotion ? { opacity: 1 } : {}}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.75, delay: shouldReduceMotion ? 0 : 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-4 sm:space-y-5 flex flex-col justify-between"
           >
-            <Card className="border-none shadow-xl rounded-3xl bg-card">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[--brand-primary]" />
+            {/* Phone Card */}
+            <Card className="border shadow-md rounded-2xl bg-card hover:border-[--brand-primary]/40 transition-colors">
+              <CardContent className="p-5">
+                <a href="tel:+905467353162" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0 group-hover:bg-[rgba(249,54,68,0.2)] transition-colors">
+                    <Phone className="w-6 h-6 text-[--brand-primary]" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg sm:text-xl font-bold mb-2">{t.contact.phone.title}</h4>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.phone.number}</p>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.phone.availability}</p>
+                    <h4 className="font-serif text-lg font-bold text-foreground mb-1 group-hover:text-[--brand-primary] transition-colors">
+                      {t.contact.phone.title}
+                    </h4>
+                    <p className="text-base font-semibold text-foreground">{t.contact.phone.number}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.contact.phone.availability}</p>
                   </div>
-                </div>
+                </a>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-xl rounded-3xl bg-card">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[--brand-primary]" />
+            {/* Email Card */}
+            <Card className="border shadow-md rounded-2xl bg-card hover:border-[--brand-primary]/40 transition-colors">
+              <CardContent className="p-5">
+                <a href="mailto:murat-35-10@hotmail.com" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0 group-hover:bg-[rgba(249,54,68,0.2)] transition-colors">
+                    <Mail className="w-6 h-6 text-[--brand-primary]" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg sm:text-xl font-bold mb-2">{t.contact.email.title}</h4>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.email.info}</p>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.email.support}</p>
+                    <h4 className="font-serif text-lg font-bold text-foreground mb-1 group-hover:text-[--brand-primary] transition-colors">
+                      {t.contact.email.title}
+                    </h4>
+                    <p className="text-sm sm:text-base font-medium text-foreground">{t.contact.email.info}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.contact.email.support}</p>
                   </div>
-                </div>
+                </a>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-xl rounded-3xl bg-card">
-              <CardContent className="p-6">
+            {/* Address Card */}
+            <Card className="border shadow-md rounded-2xl bg-card">
+              <CardContent className="p-5">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[--brand-primary]" />
+                  <div className="w-12 h-12 rounded-2xl bg-[rgba(249,54,68,0.12)] flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-[--brand-primary]" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg sm:text-xl font-bold mb-2">{t.contact.address.title}</h4>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.address.line1}</p>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.address.line2}</p>
-                    <p className="text-sm sm:text-base text-foreground/70">{t.contact.address.line3}</p>
+                    <h4 className="font-serif text-lg font-bold text-foreground mb-1">{t.contact.address.title}</h4>
+                    <p className="text-sm text-foreground/90 font-medium">{t.contact.address.line1}</p>
+                    <p className="text-xs text-muted-foreground">{t.contact.address.line2}, {t.contact.address.line3}</p>
                   </div>
                 </div>
               </CardContent>
@@ -155,20 +183,22 @@ export function ContactSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="rounded-3xl overflow-hidden shadow-xl h-48 sm:h-56 md:h-64 lg:h-72 lg:col-span-2"
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : shouldReduceMotion ? { opacity: 1 } : {}}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.8, delay: shouldReduceMotion ? 0 : 0.3 }}
+            className="lg:col-span-2 mt-4"
           >
-            <iframe
-            src="https://www.google.com/maps?q=Derek%C3%B6y%2C%20Kemalpa%C5%9Fa%2C%20%C4%B0zmir&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="EGE PET Hayvan Mezarlığı Konumu - Dereköy, Kemalpaşa, İzmir - Google Maps"
+            <GoogleMapsLocator 
+              height="380px"
+              locations={[
+                {
+                  title: "Ege Pet Hayvan Mezarlığı",
+                  address1: "Dereköy Kemalpaşa İzmir",
+                  address2: "Kemalpaşa, İzmir, Türkiye",
+                  coords: { lat: 38.3423087, lng: 27.4372834 },
+                  placeId: "ChIJLeh-5u5vuRQR0-0LLcSB3wg"
+                }
+              ]}
             />
           </motion.div>
         </div>

@@ -1,78 +1,123 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import Link from "next/link"
 import { locations } from "@/lib/locations"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin } from "lucide-react"
+import { MapPin, ArrowRight, Truck } from "lucide-react"
 
 export function LocationLinksSection() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const shouldReduceMotion = useReducedMotion()
 
-  // İlleri ve önemli ilçeleri göster
-  const mainLocations = locations.filter(
-    (loc) => loc.type === "il" || ["Kuşadası", "Bodrum", "Fethiye", "Marmaris", "Manisa", "Aydın", "Salihli", "Turgutlu"].includes(loc.name)
-  )
+  const featuredLocations = locations.slice(0, 10)
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.06,
+        delayChildren: shouldReduceMotion ? 0 : 0.05,
+      },
+    },
+  }
+
+  const cardVariants = {
+    hidden: shouldReduceMotion
+      ? { opacity: 1 }
+      : {
+          opacity: 0,
+          y: 25,
+          clipPath: "inset(15% 0% 0% 0% round 1rem)",
+        },
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0% 0% 0% 0% round 1rem)",
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
 
   return (
-    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-muted/30 dark:bg-transparent">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 bg-muted/30 dark:bg-transparent">
       <div className="container mx-auto px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-12 md:mb-16"
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : shouldReduceMotion ? { opacity: 1 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.7 }}
+          className="text-center mb-8 sm:mb-12"
         >
+          <span className="inline-block px-3.5 py-1 rounded-full bg-[rgba(249,54,68,0.1)] text-[--brand-primary] text-xs sm:text-sm font-semibold tracking-wider uppercase mb-3">
+            Hizmet Ağımız
+          </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">
             Hizmet Verdiğimiz Bölgeler
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto px-4">
-            İzmir, Manisa, Aydın, Balıkesir, Denizli, Uşak ve Muğla bölgelerinde evcil hayvan mezarlığı ve defin hizmeti sunuyoruz
+            İzmir ve yakın ilçelerinde 7/24 acil cenaze nakil ve Kemalpaşa Huzur Bahçesi'nde ebedi defin hizmeti sunuyoruz.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {mainLocations.map((location, index) => (
-            <motion.a
-              key={location.slug}
-              href={`/${location.slug}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group"
-            >
-              <Card className="h-full border-2 rounded-2xl shadow-lg bg-card hover:shadow-xl hover:border-[--brand-primary] transition-all duration-300">
-                <CardContent className="p-4 sm:p-5 text-center">
-                  <div className="w-12 h-12 rounded-xl bg-[rgba(249,54,68,0.1)] dark:bg-[rgba(249,54,68,0.15)] flex items-center justify-center mx-auto mb-3 group-hover:bg-[rgba(249,54,68,0.2)] transition-colors">
-                    <MapPin className="w-6 h-6 text-[--brand-primary]" />
-                  </div>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold mb-1 group-hover:text-[--brand-primary] transition-colors">
-                    {location.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-foreground/60">{location.distance}</p>
-                </CardContent>
-              </Card>
-            </motion.a>
-          ))}
-        </div>
-
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-center mt-8 sm:mt-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : shouldReduceMotion ? "visible" : "hidden"}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-5 max-w-6xl mx-auto"
         >
-          <a
-            href="/#contact"
-            className="text-[--brand-primary] hover:text-[--brand-primary-hover] transition-colors text-base sm:text-lg font-semibold"
+          {featuredLocations.map((location) => (
+            <motion.div key={location.slug} variants={cardVariants}>
+              <Link href={`/${location.slug}`} className="group block h-full">
+                <Card className="h-full border rounded-2xl shadow-sm bg-card hover:shadow-md hover:border-[--brand-primary] transition-all duration-300">
+                  <CardContent className="p-4 text-center flex flex-col items-center justify-center h-full">
+                    <div className="w-10 h-10 rounded-xl bg-[rgba(249,54,68,0.1)] flex items-center justify-center mb-2.5 group-hover:bg-[rgba(249,54,68,0.2)] transition-colors">
+                      <MapPin className="w-5 h-5 text-[--brand-primary]" />
+                    </div>
+                    <h3 className="font-serif text-base sm:text-lg font-bold mb-1 group-hover:text-[--brand-primary] transition-colors">
+                      {location.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">{location.distance} ({location.duration})</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Distant regions banner */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 25 }}
+          animate={isInView ? { opacity: 1, y: 0 } : shouldReduceMotion ? { opacity: 1 } : {}}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.35 }}
+          className="mt-8 sm:mt-10 max-w-4xl mx-auto p-4 sm:p-5 rounded-2xl border border-border bg-card shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[rgba(249,54,68,0.1)] flex items-center justify-center text-[--brand-primary] flex-shrink-0">
+              <Truck className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-serif font-bold text-foreground text-sm sm:text-base">
+                Muğla, Aydın, Balıkesir, Denizli veya Uşak'tan mı ulaşıyorsunuz?
+              </p>
+              <p className="text-xs text-muted-foreground">
+                100 km ve üzeri mesafeler için randevulu geniş bölge ve şehirlerarası transfer hizmetimiz mevcuttur.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/genis-bolge-hizmeti"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[--brand-primary] hover:text-[--brand-primary-hover] whitespace-nowrap"
           >
-            Tüm bölgeleri görüntüle ve iletişime geçin →
-          </a>
+            Detayları İnceleyin <ArrowRight className="w-4 h-4" />
+          </Link>
         </motion.div>
       </div>
     </section>
   )
 }
-
