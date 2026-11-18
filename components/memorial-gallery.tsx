@@ -82,14 +82,14 @@ export function MemorialGallery({ memorials = [] }: { memorials?: Memorial[] }) 
             <motion.div
               key={memorial.id || memorial.name || `memorial-${index}`}
               variants={cardVariants}
-              className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-[4/3]"
+              className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg border border-border/40 aspect-square"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <motion.img
                 src={memorial.images[0] || "/placeholder.svg"}
                 alt={`${memorial.name} - Ege Pet Hayvan Mezarlığı anı görseli`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain bg-muted/30"
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.08 }}
                 transition={{ duration: 0.4 }}
                 loading="lazy"

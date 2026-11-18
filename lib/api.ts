@@ -8,43 +8,143 @@ export interface Memorial {
   images: string[]
 }
 
-const fallbackMemorials: Memorial[] = [
+const localMemorials: Memorial[] = [
   {
-    id: "real-1",
-    name: "Luna",
-    description: "Huzur içinde uyu can dostumuz",
-    images: ["/peaceful-pet-memorial-stone-with-flowers-in-garden.jpg"],
+    "id": "egepet-huzur-bahcesi-genel-01",
+    "name": "Huzur Bahçesi — genel görünüm",
+    "description": null,
+    "images": [
+      "/gallery/huzur-bahcesi-genel-01.jpg"
+    ]
   },
   {
-    id: "real-2",
-    name: "Milo",
-    description: "Kalbimizde daima yaşayacaksın",
-    images: ["/elegant-pet-grave-marker-with-candles-at-sunset.jpg"],
+    "id": "egepet-sakir-ani-plaketi",
+    "name": "Şakir",
+    "description": null,
+    "images": [
+      "/gallery/sakir-ani-plaketi.jpg"
+    ]
   },
   {
-    id: "real-3",
-    name: "Bella",
-    description: "Sonsuz sevgi ve özlemle",
-    images: ["/serene-pet-cemetery-with-white-memorial-stones-and.jpg"],
+    "id": "egepet-bobo-ani-plaketi",
+    "name": "Bobo",
+    "description": null,
+    "images": [
+      "/gallery/bobo-ani-plaketi.jpg"
+    ]
   },
   {
-    id: "real-4",
-    name: "Max",
-    description: "Sadık dostumuz, anın ölümsüz",
-    images: ["/beautiful-pet-memorial-plaque-with-roses-in-peacef.jpg"],
+    "id": "egepet-kuki-ani-plaketi",
+    "name": "Kuki — anı plaketi",
+    "description": null,
+    "images": [
+      "/gallery/kuki-ani-plaketi.jpg"
+    ]
   },
   {
-    id: "real-5",
-    name: "Charlie",
-    description: "Doğanın kucağında huzurla uyu",
-    images: ["/pet-grave-with-flowers-and-peaceful-natural-settin.jpg"],
+    "id": "egepet-milky-ani-plaketi",
+    "name": "Milky",
+    "description": null,
+    "images": [
+      "/gallery/milky-ani-plaketi.jpg"
+    ]
   },
   {
-    id: "real-6",
-    name: "Daisy",
-    description: "Bize kattığın tüm güzellikler için teşekkürler",
-    images: ["/tranquil-pet-memorial-garden-with-stone-markers-an.jpg"],
+    "id": "egepet-maya-ani-plaketi",
+    "name": "Maya — anı plaketi",
+    "description": null,
+    "images": [
+      "/gallery/maya-ani-plaketi.jpg"
+    ]
   },
+  {
+    "id": "egepet-lucky-ani-alani",
+    "name": "Lucky",
+    "description": null,
+    "images": [
+      "/gallery/lucky-ani-alani.jpg"
+    ]
+  },
+  {
+    "id": "egepet-maya-ani-alani",
+    "name": "Maya — anı alanı",
+    "description": null,
+    "images": [
+      "/gallery/maya-ani-alani.jpg"
+    ]
+  },
+  {
+    "id": "egepet-kuki-ani-alani",
+    "name": "Kuki — anı alanı",
+    "description": null,
+    "images": [
+      "/gallery/kuki-ani-alani.jpg"
+    ]
+  },
+  {
+    "id": "egepet-serlok-dumy-ani-alanlari",
+    "name": "Şerlok ve Dumy",
+    "description": null,
+    "images": [
+      "/gallery/serlok-dumy-ani-alanlari.jpg"
+    ]
+  },
+  {
+    "id": "egepet-lilly-ani-alani-01",
+    "name": "Lilly — anı alanı",
+    "description": null,
+    "images": [
+      "/gallery/lilly-ani-alani-01.jpg"
+    ]
+  },
+  {
+    "id": "egepet-lilly-ani-alani-02",
+    "name": "Lilly — anı alanından bir görünüm",
+    "description": null,
+    "images": [
+      "/gallery/lilly-ani-alani-02.jpg"
+    ]
+  },
+  {
+    "id": "egepet-huzur-bahcesi-genel-02",
+    "name": "Huzur Bahçesi — anı alanları",
+    "description": null,
+    "images": [
+      "/gallery/huzur-bahcesi-genel-02.jpg"
+    ]
+  },
+  {
+    "id": "egepet-huzur-bahcesi-genel-03",
+    "name": "Huzur Bahçesi — doğayla iç içe",
+    "description": null,
+    "images": [
+      "/gallery/huzur-bahcesi-genel-03.jpg"
+    ]
+  },
+  {
+    "id": "egepet-huzur-bahcesi-genel-04",
+    "name": "Huzur Bahçesi — bahçeden bir görünüm",
+    "description": null,
+    "images": [
+      "/gallery/huzur-bahcesi-genel-04.jpg"
+    ]
+  },
+  {
+    "id": "egepet-huzur-bahcesi-genel-05",
+    "name": "Huzur Bahçesi — genel görünüm",
+    "description": null,
+    "images": [
+      "/gallery/huzur-bahcesi-genel-05.jpg"
+    ]
+  },
+  {
+    "id": "egepet-sakir-ani-fotografi",
+    "name": "Şakir — anı fotoğrafı",
+    "description": null,
+    "images": [
+      "/gallery/sakir-ani-fotografi.jpg"
+    ]
+  }
 ]
 
 function deduplicateMemorials(list: Memorial[]): Memorial[] {
@@ -100,13 +200,13 @@ export async function getMemorials(): Promise<Memorial[]> {
 
       const deduped = deduplicateMemorials(rawList)
       if (deduped.length > 0) {
-        return deduped
+        return deduplicateMemorials([...localMemorials, ...deduped])
       }
     }
 
-    return fallbackMemorials
+    return localMemorials
   } catch (error) {
     console.error('Memorials API error, using original customer memorials:', error)
-    return fallbackMemorials
+    return localMemorials
   }
 }
