@@ -60,7 +60,7 @@ export function Footer() {
           <div className="flex flex-col items-center gap-3 text-center">
             <Link href="/" className="inline-block">
               <Image
-                src="/toplogo.png"
+                src="/favicon-toplogo.png"
                 alt="Ege Pet Hayvan Mezarlığı logosu"
                 width={200}
                 height={80}

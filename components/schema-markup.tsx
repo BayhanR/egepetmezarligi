@@ -8,7 +8,7 @@ export function SchemaMarkup() {
     description:
       "Ege Pet Hayvan Mezarlığı; İzmir Kemalpaşa'daki 2 dönümlük huzurlu anı bahçesinde, 7/24 evden alım, özel cenaze nakil ve saygılı defin hizmeti sunmaktadır.",
     url: "https://egepetmezarligi.com",
-    logo: "https://egepetmezarligi.com/toplogo.png",
+    logo: "https://egepetmezarligi.com/favicon-toplogo.png",
     image: "https://egepetmezarligi.com/bgimage.png",
     address: {
       "@type": "PostalAddress",

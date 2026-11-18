@@ -72,7 +72,7 @@ function generateLocationSchema(location: Location) {
     name: `Ege Pet Hayvan Mezarlığı - ${location.name} Hizmeti`,
     description: `${location.name} bölgesine 7/24 cenaze nakil ve Kemalpaşa Huzur Bahçesi'nde ebedi defin hizmeti.`,
     url: `https://egepetmezarligi.com/${location.slug}`,
-    logo: "https://egepetmezarligi.com/toplogo.png",
+    logo: "https://egepetmezarligi.com/favicon-toplogo.png",
     image: "https://egepetmezarligi.com/bgimage.png",
     address: {
       "@type": "PostalAddress",

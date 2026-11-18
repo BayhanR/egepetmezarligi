@@ -40,7 +40,7 @@ export function Navigation() {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             <Image
-              src="/toplogo.png"
+              src="/favicon-toplogo.png"
               alt="Ege Pet Hayvan Mezarlığı logosu"
               width={150}
               height={60}
